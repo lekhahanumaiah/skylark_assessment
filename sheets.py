@@ -1,6 +1,6 @@
 import streamlit as st
-from google.oauth2.service_account import Credentials
 import gspread
+from google.oauth2.service_account import Credentials
 
 
 def get_client():
@@ -15,3 +15,13 @@ def get_client():
     )
 
     return gspread.authorize(creds)
+
+
+def get_sheet(spreadsheet_id):
+    client = get_client()
+    return client.open_by_key(spreadsheet_id).sheet1
+
+
+def get_all_records(spreadsheet_id):
+    sheet = get_sheet(spreadsheet_id)
+    return sheet.get_all_records()
